@@ -4,29 +4,25 @@ import viteLogo from '/vite.svg'
 
 
 function App() {
-  // Array
-  const postList = [];
-
   // Variabili reattive
+  const [postList, setPostList] = useState([])
   const [postTitle, setPostTitle] = useState('')
-  const [post, setPost] = useState(postList)
 
-  function handleSubmit(e) {
-    e.preventDefault();
+  // Funzioni
+  function handleSubmit(event) {
+    event.preventDefault();
     const newPost = {
       id: Date.now(),
       title: postTitle
     }
-    const newPostList = [...post, newPost]
-    setPost(newPostList)
+    const newPostList = [...postList, newPost]
+    setPostList(newPostList)
     setPostTitle('')
   }
 
-  function removePost(i) {
-    const updutePostList = post.filter((curPost) => {
-      return curPost.id !== i
-    })
-    setPost(updutePostList)
+  function removePost(itemToRemove) {
+    const updutePostList = postList.filter((curPost) => curPost.id !== itemToRemove)
+    setPostList(updutePostList)
   }
 
   return (
@@ -44,9 +40,9 @@ function App() {
       </section>
       {/* PostsList section */}
       <section className='container'>
-        {post.length > 0 ? (
+        {postList.length > 0 ? (
           <ul className="list-group">
-            {post.map((curPost) => (
+            {postList.map((curPost) => (
               <li key={curPost.id} className="list-group-item">
                 <span>{curPost.title}</span>
                 <button className='btn d-block' onClick={() => removePost(curPost.id)}>🗑️</button>
